@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import br.com.letscodeprojeto.model.Categoria;
 import org.modelmapper.ModelMapper;
 
 import br.com.letscodeprojeto.model.Cliente;
@@ -23,6 +24,9 @@ public class ClienteService {
 
     @Inject
     public ClienteMapper clienteMapper;
+
+
+    public Categoria categoria;
 
     @Produces(MediaType.APPLICATION_JSON)
     public List<ClienteDTO> listarClientes() {
@@ -37,7 +41,7 @@ public class ClienteService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response cadastrarCliente(ClienteDTO clienteDTO) {
         Cliente cliente = toCliente(clienteDTO);
-        cliente.setCategoria(CategoriaEnum.valueOf(clienteDTO.getCodigoCategoria()));
+        cliente.setCategoria(Categoria.getCategoriaMap(clienteDTO.getCodigoCategoria()));
         Cliente.persist(cliente);
         return Response.ok(clienteDTO).status(Response.Status.CREATED).build();
     }
@@ -51,7 +55,7 @@ public class ClienteService {
         clienteAtualizado.setEmail(clienteDTO.getEmail());
         clienteAtualizado.setVatNumber(clienteDTO.getVatNumber());
         clienteAtualizado.setCodigoCategoria(clienteDTO.getCodigoCategoria());
-        clienteAtualizado.setCategoria(CategoriaEnum.valueOf(clienteDTO.getCodigoCategoria()));
+        clienteAtualizado.setCategoria(Categoria.getCategoriaMap(clienteDTO.getCodigoCategoria()));
 
         return Response.ok(clienteDTO).status(Response.Status.OK).build();
     }

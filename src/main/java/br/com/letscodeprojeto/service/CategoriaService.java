@@ -27,6 +27,7 @@ public class CategoriaService {
     public Response cadastrarcategoria(CategoriaDTO categoriaDTO) {
         Categoria categoria = toCategoria(categoriaDTO);
         Categoria.persist(categoria);
+        Categoria.setCategoriaMap(categoria.getCodigo(), categoria.getNomeCategoria());
         return Response.ok(categoriaDTO).status(Response.Status.CREATED).build();
     }
 
@@ -35,15 +36,21 @@ public class CategoriaService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response atualizarcategoria(CategoriaDTO categoriaDTO, long id) {
         Categoria categoriaAtualizado = Categoria.findById(id);
+        categoriaAtualizado.getMapCategorias().remove(categoriaAtualizado.getCodigo());
+
         categoriaAtualizado.setCodigo(categoriaDTO.getCodigo());
         categoriaAtualizado.setNomeCategoria(categoriaDTO.getNomeCategoria());
+
+        categoriaAtualizado.getMapCategorias().put(categoriaAtualizado.getCodigo(), categoriaAtualizado.getNomeCategoria());
 
         return Response.ok(categoriaDTO).status(Response.Status.OK).build();
     }
 
     @Transactional
     public Response deletarcategoria(long id) {
+        Categoria categoria = Categoria.findById(id);
         Categoria.deleteById(id);
+        Categoria.removerCategoria(categoria.getCodigo());
         return Response.ok().status(Response.Status.OK).build();
     }
 

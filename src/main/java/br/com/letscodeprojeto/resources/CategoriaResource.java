@@ -38,7 +38,6 @@ public class CategoriaResource {
     @Path("/criar")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Transactional
     public Response cadastrarcategoria(@Valid @RequestBody CategoriaDTO categoriaDTO) {
         return categoriaService.cadastrarcategoria(categoriaDTO);
     }

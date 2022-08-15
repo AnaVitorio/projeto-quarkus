@@ -1,11 +1,13 @@
 package br.com.letscodeprojeto.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 public class Categoria extends PanacheEntityBase {
@@ -13,7 +15,10 @@ public class Categoria extends PanacheEntityBase {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String nomeCategoria;
-    private String codigo;
+    private int codigo;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    protected static Map<Integer, String> mapCategorias = new HashMap<Integer, String>();
 
     public long getId() {
         return id;
@@ -31,17 +36,34 @@ public class Categoria extends PanacheEntityBase {
         this.nomeCategoria = nomeCategoria;
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
-
-    @Override
-    public String toString() {
-        return "Categoria [codigo=" + codigo + ", nomeCategoria=" + nomeCategoria + "]";
+    public Map<Integer, String> getMapCategorias() {
+        return mapCategorias;
     }
+
+
+    public static String getCategoriaMap(int key){
+        return mapCategorias.get(key);
+
+    }
+
+    public static void setCategoriaMap(int key, String value){
+        mapCategorias.put(key, value);
+    }
+
+    public static void removerCategoria(int codigo){
+        mapCategorias.remove(codigo);
+    }
+
+    public static void atualizarCategoria(int key, String value){
+
+    }
+
 
 }

@@ -38,7 +38,6 @@ public class ClienteResource {
     @Path("/client")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Transactional
     public Response cadastrarCliente(@Valid @RequestBody ClienteDTO clienteDTO) {
         return clienteService.cadastrarCliente(clienteDTO);
     }

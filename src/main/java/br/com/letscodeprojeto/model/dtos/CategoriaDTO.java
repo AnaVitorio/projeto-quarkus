@@ -3,11 +3,9 @@ package br.com.letscodeprojeto.model.dtos;
 import javax.validation.constraints.NotEmpty;
 
 public class CategoriaDTO {
-
-    @NotEmpty(message = "O campo nomeCategoria não pode estar vazio.")
     private String nomeCategoria;
-    @NotEmpty(message = "O campo codigo não pode estar vazio.")
-    private String codigo;
+
+    private int codigo;
 
     public String getNomeCategoria() {
         return nomeCategoria;
@@ -17,11 +15,11 @@ public class CategoriaDTO {
         this.nomeCategoria = nomeCategoria;
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
