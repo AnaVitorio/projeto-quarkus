@@ -61,7 +61,9 @@ public class Categoria extends PanacheEntityBase {
         mapCategorias.remove(codigo);
     }
 
-    public static void atualizarCategoria(int key, String value){
+    public static void atualizarCategoria(int chaveAntiga, int chaveNova, String valorNovo){
+        mapCategorias.remove(chaveAntiga);
+        mapCategorias.put(chaveNova, valorNovo);
 
     }
 

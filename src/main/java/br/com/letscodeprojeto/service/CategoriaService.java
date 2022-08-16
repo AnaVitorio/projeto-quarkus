@@ -35,14 +35,10 @@ public class CategoriaService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response atualizarcategoria(CategoriaDTO categoriaDTO, long id) {
-        Categoria categoriaAtualizado = Categoria.findById(id);
-        categoriaAtualizado.getMapCategorias().remove(categoriaAtualizado.getCodigo());
-
-        categoriaAtualizado.setCodigo(categoriaDTO.getCodigo());
-        categoriaAtualizado.setNomeCategoria(categoriaDTO.getNomeCategoria());
-
-        categoriaAtualizado.getMapCategorias().put(categoriaAtualizado.getCodigo(), categoriaAtualizado.getNomeCategoria());
-
+        Categoria categoriaAntiga = Categoria.findById(id);
+        Categoria.atualizarCategoria(categoriaAntiga.getCodigo(),categoriaDTO.getCodigo(), categoriaDTO.getNomeCategoria());
+        categoriaAntiga.setNomeCategoria(categoriaDTO.getNomeCategoria());
+        categoriaAntiga.setCodigo(categoriaDTO.getCodigo());
         return Response.ok(categoriaDTO).status(Response.Status.OK).build();
     }
 

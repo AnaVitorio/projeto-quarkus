@@ -17,7 +17,6 @@ import org.modelmapper.ModelMapper;
 import br.com.letscodeprojeto.model.Cliente;
 import br.com.letscodeprojeto.model.ClienteMapper;
 import br.com.letscodeprojeto.model.dtos.ClienteDTO;
-import br.com.letscodeprojeto.model.enuns.CategoriaEnum;
 
 @ApplicationScoped
 public class ClienteService {
@@ -62,7 +61,8 @@ public class ClienteService {
 
     @Transactional
     public Response deletarCliente(long id) {
-        Cliente.deleteById(id);
+        Cliente cliente = Cliente.findById(id);
+        cliente.delete();
         return Response.ok().status(Response.Status.OK).build();
     }
 
